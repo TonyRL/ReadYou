@@ -96,7 +96,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures { buildConfig = true }
-    // Required by the AGP 9.5 Compose Preview tasks; without it `./gradlew tasks` fails.
     testOptions { unitTests { isIncludeAndroidResources = true } }
     packaging {
         resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
