@@ -163,7 +163,7 @@ dependencies {
 
     // AndroidX
     implementation(libs.android.svg)
-    implementation(libs.opml.parser)
+    implementation(libs.opml.parser) { exclude(group = "net.sf.kxml", module = "kxml2") }
     implementation(libs.readability4j)
     implementation(libs.rome)
     implementation(libs.rome.modules)
@@ -214,4 +214,5 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
     testImplementation(libs.mockito.kotlin)
+    testImplementation("net.sf.kxml:kxml2:2.3.0")
 }
