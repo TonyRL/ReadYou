@@ -35,7 +35,7 @@ if (releaseKeyPropsFile.exists()) {
 }
 
 android {
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "me.ash.reader"
