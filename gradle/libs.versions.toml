@@ -9,9 +9,6 @@ ksp = "2.3.14"
 # AboutLibraries
 aboutLibsRelease = "15.3.0"
 
-# Accompanist
-accompanist = "0.34.0"
-
 # AndroidX
 activityCompose = "1.13.0"
 appcompat = "1.8.0"
