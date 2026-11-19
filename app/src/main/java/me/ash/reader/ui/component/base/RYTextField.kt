@@ -175,7 +175,7 @@ fun RYTextField2(
             },
             textObfuscationMode =
                 if (showPassword) TextObfuscationMode.Visible
-                else TextObfuscationMode.RevealLastTyped,
+                else TextObfuscationMode.System,
             placeholder = { Text(text = placeholder) },
             keyboardOptions = keyboardOptions,
             onKeyboardAction = onKeyboardAction,
@@ -259,7 +259,7 @@ fun RYOutlinedTextField2(
             },
             textObfuscationMode =
                 if (showPassword) TextObfuscationMode.Visible
-                else TextObfuscationMode.RevealLastTyped,
+                else TextObfuscationMode.System,
             placeholder = { Text(text = placeholder) },
             keyboardOptions = keyboardOptions,
             onKeyboardAction = onKeyboardAction,

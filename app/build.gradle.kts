@@ -36,6 +36,7 @@ if (releaseKeyPropsFile.exists()) {
 
 android {
     compileSdk = 37
+    compileSdkMinor = 1 // Compose 1.13 needs API 37.1
 
     defaultConfig {
         applicationId = "me.ash.reader"
