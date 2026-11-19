@@ -8,7 +8,6 @@
 
 package me.ash.reader.ui.page.settings
 
-import android.view.SoundEffectConstants
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -26,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -40,12 +38,9 @@ fun SelectableSettingGroupItem(
     icon: ImageVector? = null,
     onClick: () -> Unit,
 ) {
-    val view = LocalView.current
-
     Surface(
         modifier = modifier
             .clickable {
-                view.playSoundEffect(SoundEffectConstants.CLICK)
                 onClick()
             }
             .alpha(if (enable) 1f else 0.5f),

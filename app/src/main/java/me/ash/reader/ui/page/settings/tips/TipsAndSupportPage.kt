@@ -252,7 +252,6 @@ fun TipsAndSupportPage(
                                 backgroundColor = MaterialTheme.colorScheme.tertiaryContainer alwaysLight true,
                             ) {
                                 view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
-                                view.playSoundEffect(SoundEffectConstants.CLICK)
                                 showSponsorDialog = true
                             })
                         Spacer(modifier = Modifier.width(16.dp))
@@ -263,7 +262,6 @@ fun TipsAndSupportPage(
                                 backgroundColor = MaterialTheme.colorScheme.primaryContainer alwaysLight true,
                             ) {
                                 view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
-                                view.playSoundEffect(SoundEffectConstants.CLICK)
                                 context.openURL(
                                     context.getString(R.string.github_link),
                                     OpenLinkPreference.AutoPreferCustomTabs
@@ -277,7 +275,6 @@ fun TipsAndSupportPage(
                                 backgroundColor = MaterialTheme.colorScheme.primaryContainer alwaysLight true,
                             ) {
                                 view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
-                                view.playSoundEffect(SoundEffectConstants.CLICK)
                                 context.openURL(
                                     context.getString(R.string.telegram_link),
                                     OpenLinkPreference.AutoPreferCustomTabs
@@ -291,7 +288,6 @@ fun TipsAndSupportPage(
                                 backgroundColor = MaterialTheme.colorScheme.secondaryContainer alwaysLight true,
                             ) {
                                 view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
-                                view.playSoundEffect(SoundEffectConstants.CLICK)
                                 context.openURL(
                                     context.getString(R.string.wiki_link),
                                     OpenLinkPreference.AutoPreferCustomTabs

@@ -1,7 +1,6 @@
 package me.ash.reader.ui.page.home.flow
 
 import android.view.HapticFeedbackConstants
-import android.view.SoundEffectConstants
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -83,7 +82,6 @@ fun MarkAsReadBarItem(
             .clip(RoundedCornerShape(16.dp))
             .clickable {
                 view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
-                view.playSoundEffect(SoundEffectConstants.CLICK)
                 onClick()
             },
         tonalElevation = 2.dp,
