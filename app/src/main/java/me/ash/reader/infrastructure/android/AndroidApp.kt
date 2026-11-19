@@ -30,6 +30,7 @@ import me.ash.reader.infrastructure.rss.RssHelper
 import me.ash.reader.ui.ext.del
 import me.ash.reader.ui.ext.getLatestApk
 import me.ash.reader.ui.ext.isGitHub
+import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import timber.log.Timber
 
@@ -95,6 +96,8 @@ class AndroidApp : Application(), Configuration.Provider {
      * 4. Check for new version
      */
     override fun onCreate() {
+        // The manifest removes the androidx.startup provider, so OkHttp does not get its context automatically.
+        OkHttp.initialize(this)
         super.onCreate()
         CrashHandler(this)
         if (BuildConfig.DEBUG) {
