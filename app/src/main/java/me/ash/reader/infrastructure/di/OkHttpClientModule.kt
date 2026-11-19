@@ -148,7 +148,6 @@ fun OkHttpClient.Builder.setupSsl(
                 override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()
             }
         } else {
-            // The platform default trust manager. OkHttp 5 made its own helper for this internal.
             TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
                 .apply { init(null as KeyStore?) }
                 .trustManagers
