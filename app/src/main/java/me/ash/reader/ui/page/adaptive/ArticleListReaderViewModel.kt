@@ -251,6 +251,7 @@ constructor(
         filterStateUseCase.updateFilterState(feed = null, group = null, searchContent = null)
 
     fun changeFilter(filterState: FilterState) {
+        diffMapHolder.commitDiffsToDb()
         filterStateUseCase.updateFilterState(
             filterState.feed,
             filterState.group,
