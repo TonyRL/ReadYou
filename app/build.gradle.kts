@@ -145,10 +145,11 @@ dependencies {
     implementation(libs.compose.material3)
 
     // Coil
-    implementation(libs.coil.base)
+    implementation(libs.coil.core)
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
     implementation(libs.coil.gif)
+    implementation(libs.coil.network.okhttp)
 
     // Hilt
     implementation(libs.hilt.work)
