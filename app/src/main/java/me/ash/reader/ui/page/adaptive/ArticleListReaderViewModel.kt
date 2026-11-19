@@ -188,6 +188,9 @@ constructor(
                     .distinctBy { it.article.id }
 
             diffMapHolder.updateDiff(articleWithFeed = items.toTypedArray(), isUnread = false)
+            if (filterStateUseCase.filterStateFlow.value.filter.isUnread()) {
+                commitReadDiffs()
+            }
         }
     }
 
