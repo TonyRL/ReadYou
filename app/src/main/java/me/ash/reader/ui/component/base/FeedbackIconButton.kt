@@ -1,7 +1,6 @@
 package me.ash.reader.ui.component.base
 
 import android.view.HapticFeedbackConstants
-import android.view.SoundEffectConstants
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Badge
@@ -29,7 +28,6 @@ fun FeedbackIconButton(
     enabled: Boolean = true,
     showBadge: Boolean = false,
     isHaptic: Boolean? = true,
-    isSound: Boolean? = true,
     onClick: () -> Unit = {},
 ) {
     val view = LocalView.current
@@ -51,7 +49,6 @@ fun FeedbackIconButton(
             enabled = enabled,
             onClick = {
                 if (isHaptic == true) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
-                if (isSound == true) view.playSoundEffect(SoundEffectConstants.CLICK)
                 onClick()
             },
         ) {

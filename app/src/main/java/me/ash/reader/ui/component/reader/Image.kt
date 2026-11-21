@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,12 +20,16 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.size.Precision
-import coil.size.Size
-import coil.size.pxOrElse
+import coil3.compose.AsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
+import coil3.network.NetworkHeaders
+import coil3.network.httpHeaders
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import coil3.request.maxBitmapSize
+import coil3.size.Precision
+import coil3.size.Size
+import coil3.size.pxOrElse
 import kotlin.math.abs
 import kotlin.math.roundToInt
 import me.ash.reader.ui.ext.extractDomain
@@ -109,12 +114,13 @@ private fun ArticleImage(
                     .apply {
                         val domain = data.toString().extractDomain()
                         if (data.toString().extractDomain() != null) {
-                            addHeader("Referer", domain!!)
+                            httpHeaders(NetworkHeaders.Builder().set("Referer", domain!!).build())
                         }
                         data(data = data)
                         crossfade(true)
                         precision(Precision.INEXACT)
                         size(size)
+                        maxBitmapSize(Size.ORIGINAL)
                     }
                     .build()
         )
@@ -135,7 +141,7 @@ private fun ArticleImage(
                     }
                 ),
     )
-    when (painter.state) {
+    when (painter.state.collectAsState().value) {
         is AsyncImagePainter.State.Error,
         is AsyncImagePainter.State.Loading -> {
             Spacer(

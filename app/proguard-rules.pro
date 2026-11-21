@@ -44,3 +44,8 @@
 -dontwarn org.slf4j.impl.StaticLoggerBinder
 
 -keep class me.ash.reader.R$font { *; }
+
+# Gson TypeToken reads generic signatures by reflection; R8 full mode strips them without these rules.
+-keepattributes Signature
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken

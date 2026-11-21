@@ -8,7 +8,6 @@
 
 package me.ash.reader.ui.component.base
 
-import android.view.SoundEffectConstants
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -80,8 +78,6 @@ fun Banner(
     action: (@Composable () -> Unit)? = null,
     onClick: () -> Unit = {},
 ) {
-    val view = LocalView.current
-
     Surface(
         modifier = modifier
             .padding(horizontal = 16.dp)
@@ -90,7 +86,6 @@ fun Banner(
         shape = RoundedCornerShape(32.dp),
         contentColor = contentColor,
         onClick = {
-            view.playSoundEffect(SoundEffectConstants.CLICK)
             onClick()
         }
     ) {

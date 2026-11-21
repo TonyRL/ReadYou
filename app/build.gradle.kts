@@ -3,7 +3,6 @@ import java.util.Properties
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 
 plugins {
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.android.application)
     alias(libs.plugins.ksp)
     alias(libs.plugins.aboutlibraries)
@@ -36,7 +35,8 @@ if (releaseKeyPropsFile.exists()) {
 }
 
 android {
-    compileSdk = 36
+    compileSdk = 37
+    compileSdkMinor = 2
 
     defaultConfig {
         applicationId = "me.ash.reader"
@@ -92,21 +92,12 @@ android {
         }
         all { signingConfig = signingConfigs.getByName("release") }
     }
-    applicationVariants.all {
-        outputs.all {
-            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName =
-                "ReadYou-${defaultConfig.versionName}-${gitCommitHash}.apk"
-        }
-    }
-    kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
-        jvmTarget = JavaVersion.VERSION_11.toString()
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures { buildConfig = true }
+    testOptions { unitTests { isIncludeAndroidResources = true } }
     packaging {
         resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
         resources.excludes.add("rome-utils-*.jar")
@@ -116,7 +107,22 @@ android {
     namespace = "me.ash.reader"
 }
 
-aboutLibraries { excludeFields = arrayOf("generated") }
+androidComponents {
+    onVariants { variant ->
+        variant.outputs.forEach {
+            (it as com.android.build.api.variant.impl.VariantOutputImpl).outputFileName.set(
+                "ReadYou-${android.defaultConfig.versionName}-${gitCommitHash}.apk"
+            )
+        }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+    }
+}
 
 dependencies {
     // AboutLibraries
@@ -139,10 +145,11 @@ dependencies {
     implementation(libs.compose.material3)
 
     // Coil
-    implementation(libs.coil.base)
+    implementation(libs.coil.core)
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
     implementation(libs.coil.gif)
+    implementation(libs.coil.network.okhttp)
 
     // Hilt
     implementation(libs.hilt.work)
@@ -156,7 +163,7 @@ dependencies {
 
     // AndroidX
     implementation(libs.android.svg)
-    implementation(libs.opml.parser)
+    implementation(libs.opml.parser) { exclude(group = "net.sf.kxml", module = "kxml2") }
     implementation(libs.readability4j)
     implementation(libs.rome)
     implementation(libs.rome.modules)
@@ -207,4 +214,5 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
     testImplementation(libs.mockito.kotlin)
+    testImplementation("net.sf.kxml:kxml2:2.3.0")
 }

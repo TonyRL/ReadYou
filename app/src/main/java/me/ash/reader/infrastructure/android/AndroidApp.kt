@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import androidx.work.WorkManager
-import coil.Coil
-import coil.ImageLoader
+import coil3.ImageLoader
+import coil3.SingletonImageLoader
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -30,6 +30,7 @@ import me.ash.reader.infrastructure.rss.RssHelper
 import me.ash.reader.ui.ext.del
 import me.ash.reader.ui.ext.getLatestApk
 import me.ash.reader.ui.ext.isGitHub
+import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import timber.log.Timber
 
@@ -95,6 +96,7 @@ class AndroidApp : Application(), Configuration.Provider {
      * 4. Check for new version
      */
     override fun onCreate() {
+        OkHttp.initialize(this)
         super.onCreate()
         CrashHandler(this)
         if (BuildConfig.DEBUG) {
@@ -105,7 +107,7 @@ class AndroidApp : Application(), Configuration.Provider {
             workerInit()
             checkUpdate()
         }
-        Coil.setImageLoader(imageLoader)
+        SingletonImageLoader.setSafe { imageLoader }
     }
 
     /** Override the [Configuration.Builder] to provide the [HiltWorkerFactory]. */

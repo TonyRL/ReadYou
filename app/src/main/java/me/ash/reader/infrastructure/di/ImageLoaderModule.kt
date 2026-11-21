@@ -3,12 +3,14 @@ package me.ash.reader.infrastructure.di
 import android.content.Context
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.decode.SvgDecoder
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
+import coil3.ImageLoader
+import coil3.disk.DiskCache
+import coil3.disk.directory
+import coil3.gif.AnimatedImageDecoder
+import coil3.gif.GifDecoder
+import coil3.memory.MemoryCache
+import coil3.network.okhttp.OkHttpNetworkFetcherFactory
+import coil3.svg.SvgDecoder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,17 +34,18 @@ object ImageLoaderModule {
         okHttpClient: OkHttpClient,
     ): ImageLoader {
         return ImageLoader.Builder(context)
-            // Shared OKHttpClient instance.
-            .okHttpClient(okHttpClient)
             // This slightly improves scrolling performance
-            .dispatcher(Dispatchers.Default)
+            .fetcherCoroutineContext(Dispatchers.Default)
+            .decoderCoroutineContext(Dispatchers.Default)
             .components {
+                // Shared OKHttpClient instance.
+                add(OkHttpNetworkFetcherFactory(callFactory = { okHttpClient }))
                 // Support SVG decoding
                 add(SvgDecoder.Factory())
                 // Support GIF decoding
                 add(
                     if (SDK_INT >= Build.VERSION_CODES.P) {
-                        ImageDecoderDecoder.Factory()
+                        AnimatedImageDecoder.Factory()
                     } else {
                         GifDecoder.Factory()
                     }
@@ -57,8 +60,8 @@ object ImageLoaderModule {
             )
             // Enable memory cache
             .memoryCache(
-                MemoryCache.Builder(context)
-                    .maxSizePercent(0.25)
+                MemoryCache.Builder()
+                    .maxSizePercent(context, 0.25)
                     .build()
             )
             .build()
