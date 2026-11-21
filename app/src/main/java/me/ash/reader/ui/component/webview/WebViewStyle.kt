@@ -9,7 +9,8 @@ object WebViewStyle {
     ): String = if (fontPath != null) """
         @font-face {
             font-family: external;
-            src: url("file://$fontPath")
+            src: url("file://$fontPath");
+            font-display: swap;
         }
     """.trimIndent() else ""
 
